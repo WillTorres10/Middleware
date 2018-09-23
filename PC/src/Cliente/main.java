@@ -6,14 +6,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Scanner;
 
 import Compartilhado.comando;
 
-public class cliente {
+public class main {
 	
-	public static void main() {
+	public static void main(String []args) {
 		
 		String ipMiddleware = null;
+		Scanner reader = new Scanner(System.in);  // Reading from System.in
+		System.out.print("Ip do Middleware: ");
+		ipMiddleware = reader.nextLine();
 		
 		comando com = new comando(10,2,1);
 		try {

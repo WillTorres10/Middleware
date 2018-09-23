@@ -6,7 +6,7 @@ import Somar.thread;
 
 public class servidor {
 	@SuppressWarnings("resource")
-	public static void main() {
+	public static void main(String [] args) {
 		try {
 			ServerSocket servidor = new ServerSocket(8000);
 			System.out.println("[Soma Server] Ouvindo a porta 8000");

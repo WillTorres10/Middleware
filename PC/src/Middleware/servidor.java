@@ -2,6 +2,8 @@ package Middleware;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
+
 import Middleware.thread;
 
 public class servidor {
@@ -16,7 +18,12 @@ public class servidor {
 	 * */
 	
 	@SuppressWarnings("resource")
-	public static void main() {
+	public static void main(String [] args) {
+		Scanner reader = new Scanner(System.in);  // Reading from System.in
+		System.out.print("Ip do Servidor de Soma: ");
+		ipSoma = reader.nextLine();
+		System.out.print("Ip do Servidor de Multiplicação: ");
+		ipMultiplicacao = reader.nextLine();
 		try {
 			ServerSocket servidor = new ServerSocket(8000);
 			System.out.println("[Middleware Server] Ouvindo a porta 8000");
