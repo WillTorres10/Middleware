@@ -1,6 +1,12 @@
 package Compartilhado;
 
-public class comando {
+import java.io.Serializable;
+
+public class comando implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public int A, B, Operacao;
 	
 	public comando(int A, int B, int Operacao) {

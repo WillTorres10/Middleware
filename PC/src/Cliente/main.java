@@ -12,6 +12,8 @@ import Compartilhado.comando;
 
 public class main {
 	
+	
+	@SuppressWarnings("resource")
 	public static void main(String []args) {
 		
 		String ipMiddleware = null;
@@ -21,7 +23,6 @@ public class main {
 		
 		comando com = new comando(10,2,1);
 		try {
-			@SuppressWarnings("resource")
 			Socket socket = new Socket(ipMiddleware,8000);
 			OutputStream os = socket.getOutputStream();
 			InputStream is = socket.getInputStream();
