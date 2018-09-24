@@ -21,21 +21,26 @@ public class main {
 		System.out.print("Ip do Middleware: ");
 		ipMiddleware = reader.nextLine();
 		
-		comando com = new comando(10,2,1);
+		comando com = new comando(8,2,2);
+		
 		try {
 			Socket socket = new Socket(ipMiddleware,8000);
 			OutputStream os = socket.getOutputStream();
 			InputStream is = socket.getInputStream();
 			ObjectOutputStream oos = new ObjectOutputStream(os);
 			ObjectInputStream ois = new ObjectInputStream(is);
+			//
 			oos.writeObject(com);
-			int result = (int) ois.readObject();
-			oos.close();
+			System.out.println("Enviou");
+			com = (comando)ois.readObject();
+			System.out.println("Recebeu");
+			//
 			ois.close();
-			os.close();
+			oos.close();
 			is.close();
+			os.close();
 			socket.close();
-			System.out.println("O valor da Operação deu: "+result);
+			System.out.println("O valor da Operação deu: "+com.result);
 			
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();

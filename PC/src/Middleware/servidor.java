@@ -19,6 +19,8 @@ public class servidor {
 	
 	@SuppressWarnings("resource")
 	public static void main(String [] args) {
+		//ipSoma = "10.180.15.91";
+		//ipMultiplicacao = "10.180.84.145";
 		Scanner reader = new Scanner(System.in);  // Reading from System.in
 		System.out.print("Ip do Servidor de Soma: ");
 		ipSoma = reader.nextLine();

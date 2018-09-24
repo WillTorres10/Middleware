@@ -33,48 +33,49 @@ public class thread extends Thread{
 		String ipCliente = cliente.getInetAddress().getHostAddress();
 		System.out.println("[Middleware Thread] IP: " + ipCliente + " | Conectado");
 		try {
-			InputStream is = this.cliente.getInputStream();
-			OutputStream os = this.cliente.getOutputStream();
-			ObjectInputStream ois = new ObjectInputStream(is);
+			OutputStream os = cliente.getOutputStream();
+			InputStream is = cliente.getInputStream();
 			ObjectOutputStream oos = new ObjectOutputStream(os);
-			comando coman = (comando)ois.readObject();
-			Socket socketOperacao = null;
-			if(coman.Operacao == 1) {
-				socketOperacao = new Socket(this.ipSoma, 8000);
+			ObjectInputStream ois = new ObjectInputStream(is);
+			//
+			comando com = (comando)ois.readObject();
+			//-
+			Socket operacao = null;
+			if(com.Operacao == 1) {
+				System.out.println("[Middleware Thread] Somando");
+				operacao = new Socket(ipSoma,8001);
 			}
-			else {
-				socketOperacao = new Socket(this.ipMultiplicacao, 8000);
+			else if(com.Operacao == 2) {
+				System.out.println("[Middleware Thread] Multiplicando");
+				operacao = new Socket(ipMultiplicacao,8001);
+			}else {
+				System.out.println("[Middleware Thread] Operação não reconhecida");
 			}
-			
-			try {
-				InputStream isOperacao = socketOperacao.getInputStream();
-				OutputStream osOperacao = socketOperacao.getOutputStream();
-				ObjectInputStream oisOperacao = new ObjectInputStream(isOperacao);
-				ObjectOutputStream oosOperacao = new ObjectOutputStream(osOperacao);
-				oosOperacao.writeObject(coman);
-				int result = (int)oisOperacao.readObject();
-				oos.writeObject(result);
-				oosOperacao.close();
-				oisOperacao.close();
-				osOperacao.close();
-				isOperacao.close();
-				oos.close();
-				ois.close();
-				os.close();
-				is.close();
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-		} catch (IOException e) {
-			//System.out.println("[Middleware Thread] IP: " + ipCliente + " | Desconectado");
+			//+++
+			OutputStream osOperacao = operacao.getOutputStream();
+			InputStream isOperacao = operacao.getInputStream();
+			ObjectOutputStream oosOperacao = new ObjectOutputStream(osOperacao);
+			ObjectInputStream oisOperacao = new ObjectInputStream(isOperacao);
+			//**
+			oosOperacao.writeObject(com);
+			com = (comando)oisOperacao.readObject();
+			//**
+			oisOperacao.close();
+			oosOperacao.close();
+			isOperacao.close();
+			osOperacao.close();
+			operacao.close();
+			//+++
+			//-
+			oos.writeObject(com);
+			//
+			ois.close();
+			oos.close();
+			is.close();
+			os.close();
+			cliente.close();
+		} catch (Exception e) {
 			e.printStackTrace();
-			Thread.currentThread().interrupt();
-		} catch (ClassNotFoundException e) {
-			//System.out.println("[Middleware Thread] IP: " + ipCliente + " | Desconectado");
-			e.printStackTrace();
-			Thread.currentThread().interrupt();
 		}
 		Thread.currentThread().interrupt();
 	}

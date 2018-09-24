@@ -19,25 +19,21 @@ public class thread extends Thread {
 		String ipCliente = cliente.getInetAddress().getHostAddress();
 		System.out.println("[Soma Thread] IP: " + ipCliente + " | Conectado");
 		try {
-			InputStream is = this.cliente.getInputStream();
-			OutputStream os = this.cliente.getOutputStream();
-			ObjectInputStream ois = new ObjectInputStream(is);
+			OutputStream os = cliente.getOutputStream();
+			InputStream is = cliente.getInputStream();
 			ObjectOutputStream oos = new ObjectOutputStream(os);
-			comando coman = (comando)ois.readObject();
-			int result = coman.A + coman.B;
-			oos.writeObject(result);
-			oos.close();
+			ObjectInputStream ois = new ObjectInputStream(is);
+			//-
+			comando com = (comando)ois.readObject();
+			com.result = com.A + com.B;
+			oos.writeObject(com);
+			//-
 			ois.close();
-			os.close();
+			oos.close();
 			is.close();
-			this.cliente.close();
-			
-		} catch (IOException e) {
-			//System.out.println("[Soma Thread] IP: " + ipCliente + " | Desconectado");
-			e.printStackTrace();
-			Thread.currentThread().interrupt();
-		} catch (ClassNotFoundException e) {
-			//System.out.println("[Soma Thread] IP: " + ipCliente + " | Desconectado");
+			os.close();
+		} catch (Exception e) {
+			//System.out.println("[Multiplicação Thread] IP: " + ipCliente + " | Desconectado");
 			e.printStackTrace();
 			Thread.currentThread().interrupt();
 		}
