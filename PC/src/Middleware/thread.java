@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import Compartilhado.comando;
-
+import Middleware.middleServer;
 public class thread extends Thread{
 	private Socket cliente;
 	private String ipSoma, ipMultiplicacao;
@@ -31,7 +31,9 @@ public class thread extends Thread{
 	@SuppressWarnings("resource")
 	public void run() {
 		String ipCliente = cliente.getInetAddress().getHostAddress();
-		System.out.println("[Middleware Thread] IP: " + ipCliente + " | Conectado");
+		//Systemout.println("[Middleware Thread] IP: " + ipCliente + " | Conectado");
+		middleServer m = new middleServer();
+		m.sta2 = ("[Middleware Thread] IP: " + ipCliente + " | Conectado");
 		try {
 			OutputStream os = cliente.getOutputStream();
 			InputStream is = cliente.getInputStream();
@@ -42,14 +44,17 @@ public class thread extends Thread{
 			//-
 			Socket operacao = null;
 			if(com.Operacao == 1) {
+				m.sta = ("[Middleware Thread] Somando");
 				System.out.println("[Middleware Thread] Somando");
 				operacao = new Socket(ipSoma,8001);
 			}
 			else if(com.Operacao == 2) {
 				System.out.println("[Middleware Thread] Multiplicando");
+				m.sta = ("[Middleware Thread] Multiplicando");
 				operacao = new Socket(ipMultiplicacao,8001);
 			}else {
 				System.out.println("[Middleware Thread] Operação não reconhecida");
+				m.sta = ("[Middleware Thread] Operação não reconhecida");
 			}
 			//+++
 			OutputStream osOperacao = operacao.getOutputStream();

@@ -21,7 +21,7 @@ public class main {
 		System.out.print("Ip do Middleware: ");
 		ipMiddleware = reader.nextLine();
 		
-		comando com = new comando(8,2,2);
+		comando com = new comando(10,2,2);
 		
 		try {
 			Socket socket = new Socket(ipMiddleware,8000);
